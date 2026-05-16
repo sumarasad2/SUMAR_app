@@ -1,11 +1,11 @@
-const CACHE_NAME = "real-estate-app-v1";
+const CACHE_NAME = "real-estate-cache-v1";
 
 const urlsToCache = [
-  "/",
-  "/index.html",
-  "/style.css",
-  "/script.js",
-  "/manifest.json"
+  "./",
+  "./index.html",
+  "./style.css",
+  "./script.js",
+  "./manifest.json"
 ];
 
 self.addEventListener("install", event => {
@@ -18,6 +18,29 @@ self.addEventListener("install", event => {
         return cache.addAll(urlsToCache);
       })
   );
+
+  self.skipWaiting();
+});
+
+self.addEventListener("activate", event => {
+
+  event.waitUntil(
+
+    caches.keys().then(keys => {
+
+      return Promise.all(
+
+        keys.map(key => {
+
+          if (key !== CACHE_NAME) {
+            return caches.delete(key);
+          }
+        })
+      );
+    })
+  );
+
+  self.clients.claim();
 });
 
 self.addEventListener("fetch", event => {
