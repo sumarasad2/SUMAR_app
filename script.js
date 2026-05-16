@@ -1,5 +1,5 @@
 let appointments =
-  JSON.parse(localStorage.getItem("appointments")) || [];
+JSON.parse(localStorage.getItem("appointments")) || [];
 
 let editId = null;
 
@@ -13,18 +13,13 @@ const days = [
   "السبت"
 ];
 
-const saveBtn =
-  document.getElementById("saveBtn");
-
-saveBtn.addEventListener("click", saveAppointment);
+document
+.getElementById("saveBtn")
+.addEventListener("click", saveAppointment);
 
 document
-  .getElementById("searchInput")
-  .addEventListener("input", renderAppointments);
-
-document
-  .getElementById("importFile")
-  .addEventListener("change", importData);
+.getElementById("searchInput")
+.addEventListener("input", renderAppointments);
 
 function saveAppointment() {
 
@@ -38,11 +33,8 @@ function saveAppointment() {
     notes: document.getElementById("notes").value
   };
 
-  if (
-    !appointment.property ||
-    !appointment.name
-  ) {
-    alert("يرجى تعبئة الحقول المطلوبة");
+  if (!appointment.name || !appointment.property) {
+    alert("يرجى تعبئة البيانات");
     return;
   }
 
@@ -57,13 +49,12 @@ function saveAppointment() {
   } else {
 
     appointments.push(appointment);
-
-    showNotification(
-      "تم حفظ موعد جديد لـ " + appointment.name
-    );
   }
 
-  saveData();
+  localStorage.setItem(
+    "appointments",
+    JSON.stringify(appointments)
+  );
 
   clearForm();
 
@@ -73,12 +64,12 @@ function saveAppointment() {
 function renderAppointments() {
 
   const container =
-    document.getElementById("appointments");
+  document.getElementById("appointments");
 
   const search =
-    document.getElementById("searchInput")
-      .value
-      .toLowerCase();
+  document.getElementById("searchInput")
+  .value
+  .toLowerCase();
 
   container.innerHTML = "";
 
@@ -87,7 +78,9 @@ function renderAppointments() {
   days.forEach(day => {
 
     const filtered = appointments.filter(a =>
+
       a.day === day &&
+
       (
         a.name.toLowerCase().includes(search) ||
         a.property.toLowerCase().includes(search) ||
@@ -101,9 +94,7 @@ function renderAppointments() {
       found = true;
 
       container.innerHTML += `
-        <div class="day-title">
-          ${day}
-        </div>
+        <div class="day-title">${day}</div>
       `;
 
       filtered.forEach(a => {
@@ -113,44 +104,32 @@ function renderAppointments() {
 
             <h3>${a.name}</h3>
 
-            <p>
-              <strong>المنطقة:</strong>
-              ${a.area}
-            </p>
+            <p><strong>المنطقة:</strong> ${a.area}</p>
 
-            <p>
-              <strong>رقم العقار:</strong>
-              ${a.property}
-            </p>
+            <p><strong>العقار:</strong> ${a.property}</p>
 
-            <p>
-              <strong>الهاتف:</strong>
-              ${a.phone}
-            </p>
+            <p><strong>الهاتف:</strong> ${a.phone}</p>
 
-            <p>
-              <strong>ملاحظات:</strong>
-              ${a.notes || "-"}
-            </p>
+            <p><strong>ملاحظات:</strong> ${a.notes}</p>
 
             <div class="actions">
 
               <button
-                class="edit-btn"
-                onclick="editAppointment(${a.id})">
-                تعديل
+              class="edit-btn"
+              onclick="editAppointment(${a.id})">
+              تعديل
               </button>
 
               <button
-                class="postpone-btn"
-                onclick="postponeAppointment(${a.id})">
-                تأجيل
+              class="postpone-btn"
+              onclick="postponeAppointment(${a.id})">
+              تأجيل
               </button>
 
               <button
-                class="delete-btn"
-                onclick="deleteAppointment(${a.id})">
-                حذف
+              class="delete-btn"
+              onclick="deleteAppointment(${a.id})">
+              حذف
               </button>
 
             </div>
@@ -165,16 +144,29 @@ function renderAppointments() {
 
     container.innerHTML = `
       <div class="empty">
-        لا توجد مواعيد حالياً
+      لا توجد مواعيد
       </div>
     `;
   }
 }
 
+function deleteAppointment(id) {
+
+  appointments =
+  appointments.filter(a => a.id !== id);
+
+  localStorage.setItem(
+    "appointments",
+    JSON.stringify(appointments)
+  );
+
+  renderAppointments();
+}
+
 function editAppointment(id) {
 
   const a =
-    appointments.find(a => a.id === id);
+  appointments.find(a => a.id === id);
 
   document.getElementById("day").value = a.day;
   document.getElementById("area").value = a.area;
@@ -194,10 +186,10 @@ function editAppointment(id) {
 function postponeAppointment(id) {
 
   const appointment =
-    appointments.find(a => a.id === id);
+  appointments.find(a => a.id === id);
 
   const currentIndex =
-    days.indexOf(appointment.day);
+  days.indexOf(appointment.day);
 
   let nextIndex = currentIndex + 1;
 
@@ -207,26 +199,10 @@ function postponeAppointment(id) {
 
   appointment.day = days[nextIndex];
 
-  saveData();
-
-  renderAppointments();
-
-  alert(
-    "تم تأجيل الموعد إلى " + appointment.day
+  localStorage.setItem(
+    "appointments",
+    JSON.stringify(appointments)
   );
-}
-
-function deleteAppointment(id) {
-
-  const confirmDelete =
-    confirm("هل تريد حذف الموعد؟");
-
-  if (!confirmDelete) return;
-
-  appointments =
-    appointments.filter(a => a.id !== id);
-
-  saveData();
 
   renderAppointments();
 }
@@ -239,108 +215,4 @@ function clearForm() {
   document.getElementById("notes").value = "";
 }
 
-function saveData() {
-
-  localStorage.setItem(
-    "appointments",
-    JSON.stringify(appointments)
-  );
-}
-
-function exportData() {
-
-  const data =
-    JSON.stringify(appointments, null, 2);
-
-  const blob = new Blob(
-    [data],
-    { type: "application/json" }
-  );
-
-  const url =
-    URL.createObjectURL(blob);
-
-  const a =
-    document.createElement("a");
-
-  a.href = url;
-
-  a.download =
-    "appointments-backup.json";
-
-  a.click();
-
-  URL.revokeObjectURL(url);
-}
-
-function importData(event) {
-
-  const file = event.target.files[0];
-
-  if (!file) return;
-
-  const reader = new FileReader();
-
-  reader.onload = function(e) {
-
-    try {
-
-      appointments =
-        JSON.parse(e.target.result);
-
-      saveData();
-
-      renderAppointments();
-
-      alert("تمت استعادة النسخة بنجاح");
-
-    } catch {
-
-      alert("ملف غير صالح");
-    }
-  };
-
-  reader.readAsText(file);
-}
-
-async function requestNotificationPermission() {
-
-  if ("Notification" in window) {
-
-    const permission =
-      await Notification.requestPermission();
-
-    if (permission === "granted") {
-
-      new Notification(
-        "تم تفعيل الإشعارات"
-      );
-    }
-  }
-}
-
-function showNotification(message) {
-
-  if (
-    "Notification" in window &&
-    Notification.permission === "granted"
-  ) {
-
-    new Notification(
-      "إدارة الكشف العقاري",
-      {
-        body: message
-      }
-    );
-  }
-}
-
-requestNotificationPermission();
-
 renderAppointments();
-
-if ("serviceWorker" in navigator) {
-
-  navigator.serviceWorker
-    .register("service-worker.js");
-}
