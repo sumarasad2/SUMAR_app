@@ -1,0 +1,141 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: #f1f5f9;
+  font-family: sans-serif;
+  color: #111827;
+}
+
+header {
+  background: #0f172a;
+  color: white;
+  padding: 25px 15px;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 28px;
+}
+
+header p {
+  margin-top: 10px;
+  opacity: 0.8;
+}
+
+main {
+  padding: 15px;
+}
+
+.form-section,
+.tools-section {
+  background: white;
+  padding: 15px;
+  border-radius: 18px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+.form-section h2 {
+  margin-top: 0;
+}
+
+input,
+select,
+textarea,
+button {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 12px;
+  border-radius: 12px;
+  border: 1px solid #cbd5e1;
+  font-size: 16px;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+button {
+  background: #0f172a;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.92;
+}
+
+.tools-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.import-btn {
+  flex: 1;
+  background: #334155;
+  color: white;
+  padding: 14px;
+  text-align: center;
+  border-radius: 12px;
+}
+
+.day-title {
+  margin-top: 30px;
+  margin-bottom: 15px;
+  font-size: 22px;
+  color: #0f172a;
+  font-weight: bold;
+}
+
+.card {
+  background: white;
+  border-radius: 18px;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+.card h3 {
+  margin-top: 0;
+  color: #0f172a;
+}
+
+.card p {
+  margin: 8px 0;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.actions button {
+  flex: 1;
+  padding: 12px;
+}
+
+.edit-btn {
+  background: #2563eb;
+}
+
+.postpone-btn {
+  background: #d97706;
+}
+
+.delete-btn {
+  background: #dc2626;
+}
+
+.empty {
+  text-align: center;
+  padding: 30px;
+  color: #64748b;
+}

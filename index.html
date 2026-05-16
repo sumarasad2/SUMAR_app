@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>إدارة الكشف العقاري</title>
+
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
+
+  <meta name="theme-color" content="#0f172a" />
+</head>
+
+<body>
+
+  <header>
+    <h1>إدارة الكشف العقاري</h1>
+    <p>إدارة مواعيد الكشف العقاري بدون إنترنت</p>
+  </header>
+
+  <main>
+
+    <section class="form-section">
+
+      <h2>إضافة موعد</h2>
+
+      <select id="day">
+        <option>الأحد</option>
+        <option>الاثنين</option>
+        <option>الثلاثاء</option>
+        <option>الأربعاء</option>
+        <option>الخميس</option>
+        <option>الجمعة</option>
+        <option>السبت</option>
+      </select>
+
+      <select id="area">
+        <option>عمارة برانية</option>
+        <option>عمارة جوانية</option>
+        <option>قيمرية</option>
+        <option>عقيبة</option>
+        <option>ساروجة</option>
+        <option>باب بريد</option>
+      </select>
+
+      <input
+        type="text"
+        id="property"
+        placeholder="رقم العقار"
+      />
+
+      <input
+        type="text"
+        id="name"
+        placeholder="اسم طالب الكشف"
+      />
+
+      <input
+        type="tel"
+        id="phone"
+        placeholder="رقم الهاتف"
+      />
+
+      <textarea
+        id="notes"
+        placeholder="ملاحظات"
+      ></textarea>
+
+      <button id="saveBtn">
+        حفظ الموعد
+      </button>
+
+    </section>
+
+    <section class="tools-section">
+
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="بحث بالاسم أو العقار أو الهاتف..."
+      />
+
+      <div class="tools-buttons">
+
+        <button onclick="exportData()">
+          نسخ احتياطي
+        </button>
+
+        <label class="import-btn">
+          استعادة نسخة
+          <input
+            type="file"
+            id="importFile"
+            hidden
+          />
+        </label>
+
+      </div>
+
+    </section>
+
+    <section id="appointments"></section>
+
+  </main>
+
+  <script src="script.js"></script>
+
+</body>
+
+</html>
