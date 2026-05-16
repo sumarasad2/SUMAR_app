@@ -108,7 +108,12 @@ function renderAppointments() {
 
             <p><strong>العقار:</strong> ${a.property}</p>
 
-            <p><strong>الهاتف:</strong> ${a.phone}</p>
+            <p>
+<strong>الهاتف:</strong>
+<a href="tel:${a.phone}">
+${a.phone}
+</a>
+</p>
 
             <p><strong>ملاحظات:</strong> ${a.notes}</p>
 
